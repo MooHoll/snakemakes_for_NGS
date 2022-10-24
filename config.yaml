@@ -1,0 +1,25 @@
+samples:
+ olq_queen_1: old_queen_1.fastq   
+ old_worker_4: old_worker_4.fastq	
+ young_queen_5: young_queen_5.fastq
+ old_queen_2: old_queen_2.fastq   
+ old_worker_5: old_worker_5.fastq	 
+ young_queen_6: young_queen_6.fastq
+ old_queen_3: old_queen_3.fastq   
+ old_worker_6: old_worker_6.fastq	 
+ young_worker_1: young_worker_1.fastq
+ old_queen_4: old_queen_4.fastq   
+ old_worker_7: old_worker_7.fastq	 
+ young_worker_2: young_worker_2.fastq
+ old_queen_5: old_queen_5.fastq   
+ young_queen_1: young_queen_1.fastq  
+ young_worker_3: young_worker_3.fastq
+ old_worker_1: old_worker_1.fastq  
+ young_queen_2: young_queen_2.fastq  
+ young_worker_4: young_worker_4.fastq
+ old_worker_2: old_worker_2.fastq  
+ young_queen_3: young_queen_3.fastq  
+ young_worker_5: young_worker_5.fastq
+ old_worker_3: old_worker_3.fastq  
+ young_queen_4: young_queen_4.fastq  
+ young_worker_6: young_worker_6.fastq
