@@ -9,3 +9,5 @@ conda activate snakemake_env
 
 conda install -c bioconda snakemake
 
+NOTE: If running tests need to run: snakemake --unlock when done, before submitting the job to the cluster,
+otherwise it will kill out.
