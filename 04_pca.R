@@ -15,19 +15,28 @@ library(ggrepel)
 ## -------------------------------------------------------------------------
 
 # Get a methylkit object for all samples
-sample.list <- list("m08_merged_CpG_evidence.cov" ,"m19_merged_CpG_evidence.cov",
-                    "m23_merged_CpG_evidence.cov","m37_merged_CpG_evidence.cov",
-                    "q08_merged_CpG_evidence.cov" ,"q19_merged_CpG_evidence.cov",
-                    "q23_merged_CpG_evidence.cov","q37_merged_CpG_evidence.cov",
-                    "w08_merged_CpG_evidence.cov" ,"w19_merged_CpG_evidence.cov",
-                    "w23_merged_CpG_evidence.cov","w37_merged_CpG_evidence.cov")
+sample.list <- list("old_queen_1.CpG_report.merged_CpG_evidence.cov" ,"old_queen_2.CpG_report.merged_CpG_evidence.cov",
+                    "old_queen_3.CpG_report.merged_CpG_evidence.cov","old_queen_4.CpG_report.merged_CpG_evidence.cov",
+                    "old_queen_5.CpG_report.merged_CpG_evidence.cov" ,
+                    "young_queen_1.CpG_report.merged_CpG_evidence.cov","young_queen_2.CpG_report.merged_CpG_evidence.cov",
+                    "young_queen_3.CpG_report.merged_CpG_evidence.cov","young_queen_4.CpG_report.merged_CpG_evidence.cov",
+                    "young_queen_5.CpG_report.merged_CpG_evidence.cov","young_queen_6.CpG_report.merged_CpG_evidence.cov",
+                    "old_worker_1.CpG_report.merged_CpG_evidence.cov" ,"old_worker_2.CpG_report.merged_CpG_evidence.cov",
+                    "old_worker_3.CpG_report.merged_CpG_evidence.cov","old_worker_4.CpG_report.merged_CpG_evidence.cov",
+                    "old_worker_5.CpG_report.merged_CpG_evidence.cov" ,"old_worker_6.CpG_report.merged_CpG_evidence.cov",
+                    "old_worker_7.CpG_report.merged_CpG_evidence.cov",
+                    "young_worker_1.CpG_report.merged_CpG_evidence.cov","young_worker_2.CpG_report.merged_CpG_evidence.cov",
+                    "young_worker_3.CpG_report.merged_CpG_evidence.cov","young_worker_4.CpG_report.merged_CpG_evidence.cov",
+                    "young_worker_5.CpG_report.merged_CpG_evidence.cov","young_worker_6.CpG_report.merged_CpG_evidence.cov")
+
 
 CPGRaw <- methRead(sample.list, 
-                   sample.id = list("m08", "m19","m23","m37",
-                                    "q08", "q19","q23","q37",
-                                    "w08", "w19","w23","w37"),
-                   assembly="bter_1.0",
-                   treatment=c(0,0,0,0,1,1,1,1,2,2,2,2),
+                   sample.id = list("Old_Q1", "Old_Q2","Old_Q3","Old_Q4","Old_Q5",
+                                    "Young_Q1", "Young_Q2","Young_Q3","Young_Q4","Young_Q5","Young_Q6",
+                                    "Old_W1", "Old_W2","Old_W3","Old_W4","Old_W5","Old_W6","Old_W7",
+                                    "Young_W1", "Young_W2","Young_W3","Young_W4","Young_W5","Young_W6"),
+                   assembly="ant",
+                   treatment=c(0,0,0,0,0,1,1,1,1,1,1,3,3,3,3,3,3,3,4,4,4,4,4,4),
                    context="CpG",
                    dbtype = NA,
                    pipeline = "bismarkCoverage",
@@ -57,6 +66,18 @@ k <- df_meth_all[,29:30]
 l <- df_meth_all[,32:33]
 m <- df_meth_all[,35:36]
 n <- df_meth_all[,38:39]
+a1 <- df_meth_all[,41:42]
+b1 <- df_meth_all[,44:45]
+c1 <- df_meth_all[,47:48]
+d1 <- df_meth_all[,50:51]
+e1 <- df_meth_all[,53:54]
+f1 <- df_meth_all[,56:57]
+g1 <- df_meth_all[,59:60]
+h1 <- df_meth_all[,62:63]
+k1 <- df_meth_all[,65:66]
+l1 <- df_meth_all[,68:69]
+m1 <- df_meth_all[,71:72]
+n1 <- df_meth_all[,74:75]
 
 bt <- function(a, b, p = 0.005) {binom.test(a, b, 0.005, alternative="greater")$p.value}
 allrows <- data.frame(CT=numeric(),Ccount=numeric(),pVal=numeric(),FDR=numeric(),row=numeric())
@@ -83,14 +104,14 @@ PCA_data <- PCASamples(subset_methBase, screeplot=F, obj.return = T)
 PCA_data1 <- as.data.frame(PCA_data$x)
 PCA_data1$sample <- row.names(PCA_data1)
 
-PCA_data1$Caste <- c(rep("Male", 4), rep("Queen", 4), rep("Worker", 4))
+PCA_data1$type <- c(rep("Old_Q", 5), rep("Young_Q", 6), rep("Old_W", 7), rep("Young_W", 6))
 
 
 percentage <- round(PCA_data$sdev / sum(PCA_data$sdev) * 100, 0)
 percentage <- paste(colnames(PCA_data), "(", paste( as.character(percentage), "%", ")", sep="") )
 
 
-ggplot(PCA_data1, aes(PC1, PC2, colour=Caste))+
+ggplot(PCA_data1, aes(PC1, PC2, colour=type))+
   geom_point(size=14)+
   geom_text_repel(aes(label=sample), size=12,show.legend=FALSE, 
                   point.padding = 2, box.padding = 1)+
@@ -101,4 +122,4 @@ ggplot(PCA_data1, aes(PC1, PC2, colour=Caste))+
         axis.title=element_text(size=30),
         legend.text=element_text(size=30),
         legend.title=element_blank())+
-  scale_colour_manual(values=c("#44AA99","#CC6677","#DDCC77"))
+  scale_colour_manual(values=c("#0066CC","#99CCFF","#663399","#CC99FF"))
