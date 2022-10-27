@@ -71,23 +71,11 @@ rule lambda_alignment:
         --multicore 3 --genome lambda_genome_folder --prefix lambda --single_end {input.fastq}
         """
 
-rule deduplication:
+rule meth_extraction:
     input:
         "{sample}_trim_bismark_bt2.bam"
     output:
-        "{sample}_trim_bismark_bt2.deduplicated.bam"
-    shell:
-        """
-        module load bowtie2/2.3.5.1
-        module load samtools/1.9 
-       /scratch/monoallelic/hjm32/bin/Bismark-0.22.3/deduplicate_bismark {input}
-        """
-
-rule meth_extraction:
-    input:
-        "{sample}_trim_bismark_bt2.deduplicated.bam"
-    output:
-        "{sample}_trim_bismark_bt2.deduplicated.bismark.cov.gz"
+        "{sample}_trim_bismark_bt2.bismark.cov.gz"
     shell:
         """
         module load bowtie2/2.3.5.1
@@ -99,7 +87,7 @@ rule meth_extraction:
 
 rule merge_cpgs:
     input:
-        "{sample}_trim_bismark_bt2.deduplicated.bismark.cov.gz"
+        "{sample}_trim_bismark_bt2.bismark.cov.gz"
     output:
         "{sample}.CpG_report.merged_CpG_evidence.cov"
     params:
